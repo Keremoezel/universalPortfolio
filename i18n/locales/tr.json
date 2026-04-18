@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "work": "İşler",
+    "about": "Hakkında",
+    "contact": "İletişim"
+  },
+  "hero": {
+    "available": "Seçili projeler için müsait",
+    "scroll": "Kaydır"
+  },
+  "work": {
+    "title": "Projeler",
+    "tag": "Seçili Çalışmalar",
+    "more": "Daha Fazla"
+  },
+  "about": {
+    "tag": "Hakkında",
+    "disciplines": "Uzmanlıklar",
+    "location": "Konum",
+    "status": "Durum"
+  },
+  "contact": {
+    "tag": "İletişim",
+    "responseTime": "Yanıt süresi",
+    "availability": "Müsaitlik",
+    "stack": "Teknolojiler"
+  },
+  "project": {
+    "back": "Portföye dön",
+    "caseStudy": "Vaka Çalışması",
+    "problem": "Sorun",
+    "approach": "Yaklaşım",
+    "solution": "Çözüm",
+    "result": "Sonuç",
+    "viewLive": "Canlıyı gör",
+    "previous": "Önceki",
+    "next": "Sonraki"
+  }
+}

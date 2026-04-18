@@ -1,0 +1,99 @@
+/* ============================================================
+   DUSK — Design Token System
+   Cinematic Portfolio | Warm twilight aesthetic
+   ============================================================ */
+
+:root {
+  /* ── Color Tokens ── */
+  --dusk-bg:           #120e08;
+  --dusk-bg-deep:      #0b0905;
+  --dusk-surface:      #1e1610;
+  --dusk-surface-alt:  #261d13;
+  --dusk-border:       #3a2d1c;
+  --dusk-border-muted: #2a2015;
+
+  --dusk-primary:      #d4944a;
+  --dusk-primary-dark: #b5792d;
+  --dusk-primary-glow: color-mix(in srgb, var(--dusk-primary) 15%, transparent);
+
+  --dusk-accent:       #c4613a;
+  --dusk-accent-dark:  #a8502f;
+  --dusk-accent-glow:  color-mix(in srgb, var(--dusk-accent) 15%, transparent);
+
+  --dusk-text:         #f2ede3;
+  --dusk-text-secondary: #c9bfad;
+  --dusk-text-muted:   #8a7d6b;
+  --dusk-text-faint:   #54493b;
+
+  /* ── Typography ── */
+  --font-display:      'Cormorant Garamond', 'Georgia', serif;
+  --font-body:         'DM Sans', 'Helvetica Neue', sans-serif;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-lg:   1.125rem;
+  --text-xl:   1.25rem;
+  --text-2xl:  1.5rem;
+  --text-3xl:  1.875rem;
+  --text-4xl:  2.25rem;
+  --text-5xl:  3rem;
+  --text-6xl:  3.75rem;
+  --text-7xl:  4.5rem;
+  --text-8xl:  6rem;
+  --text-9xl:  8rem;
+
+  --leading-tight:   1.2;
+  --leading-snug:    1.35;
+  --leading-normal:  1.6;
+  --leading-relaxed: 1.8;
+
+  --tracking-tight:  -0.04em;
+  --tracking-normal: -0.01em;
+  --tracking-wide:   0.05em;
+  --tracking-widest: 0.15em;
+
+  /* ── Spacing ── */
+  --space-1:   0.25rem;
+  --space-2:   0.5rem;
+  --space-3:   0.75rem;
+  --space-4:   1rem;
+  --space-5:   1.25rem;
+  --space-6:   1.5rem;
+  --space-8:   2rem;
+  --space-10:  2.5rem;
+  --space-12:  3rem;
+  --space-16:  4rem;
+  --space-20:  5rem;
+  --space-24:  6rem;
+  --space-32:  8rem;
+  --space-40:  10rem;
+
+  /* ── Radius ── */
+  --radius-sm:  2px;
+  --radius-md:  4px;
+  --radius-lg:  8px;
+  --radius-xl:  12px;
+  --radius-full: 9999px;
+
+  /* ── Shadows ── */
+  --shadow-sm:  0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md:  0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg:  0 12px 40px rgba(0,0,0,0.6);
+  --shadow-glow-primary: 0 0 30px color-mix(in srgb, var(--dusk-primary) 12%, transparent);
+  --shadow-glow-accent:  0 0 30px color-mix(in srgb, var(--dusk-accent) 12%, transparent);
+
+  /* ── Transitions ── */
+  --ease-smooth:    cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out-expo:  cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out:    cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast:  150ms;
+  --duration-base:  250ms;
+  --duration-slow:  450ms;
+  --duration-slower: 800ms;
+
+  /* ── Layout ── */
+  --max-width:     1200px;
+  --nav-height:    72px;
+  --sidebar-width: 260px;
+}

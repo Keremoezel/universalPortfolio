@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "hero": {
+    "available": "Available for select projects",
+    "scroll": "Scroll"
+  },
+  "work": {
+    "title": "Projects",
+    "tag": "Selected Work",
+    "more": "More Work"
+  },
+  "about": {
+    "tag": "About",
+    "disciplines": "Disciplines",
+    "location": "Location",
+    "status": "Status"
+  },
+  "contact": {
+    "tag": "Contact",
+    "responseTime": "Response time",
+    "availability": "Availability",
+    "stack": "Stack"
+  },
+  "project": {
+    "back": "Back to portfolio",
+    "caseStudy": "Case Study",
+    "problem": "The Problem",
+    "approach": "The Approach",
+    "solution": "The Solution",
+    "result": "The Result",
+    "viewLive": "View live project",
+    "previous": "Previous",
+    "next": "Next"
+  }
+}

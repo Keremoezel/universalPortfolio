@@ -1,0 +1,39 @@
+{
+  "nav": {
+    "work": "Arbeiten",
+    "about": "Über mich",
+    "contact": "Kontakt"
+  },
+  "hero": {
+    "available": "Verfügbar für ausgewählte Projekte",
+    "scroll": "Scrollen"
+  },
+  "work": {
+    "title": "Projekte",
+    "tag": "Ausgewählte Arbeiten",
+    "more": "Weitere Arbeiten"
+  },
+  "about": {
+    "tag": "Über mich",
+    "disciplines": "Disziplinen",
+    "location": "Standort",
+    "status": "Status"
+  },
+  "contact": {
+    "tag": "Kontakt",
+    "responseTime": "Antwortzeit",
+    "availability": "Verfügbarkeit",
+    "stack": "Technologien"
+  },
+  "project": {
+    "back": "Zurück zum Portfolio",
+    "caseStudy": "Fallstudie",
+    "problem": "Das Problem",
+    "approach": "Die Herangehensweise",
+    "solution": "Die Lösung",
+    "result": "Das Ergebnis",
+    "viewLive": "Live-Projekt ansehen",
+    "previous": "Vorherige",
+    "next": "Nächste"
+  }
+}
