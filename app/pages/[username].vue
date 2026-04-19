@@ -26,24 +26,27 @@ if (error.value || !site.value) {
   throw createError({ statusCode: 404, message: 'Portfolio not found.' })
 }
 
-// Populate stores before rendering so PortfolioView sees the correct data
-if (Object.keys(site.value.content).length) {
-  contentStore.loadFromConfig(site.value.content)
-}
-if (Array.isArray(site.value.components) && site.value.components.length) {
-  componentsStore.loadFromConfig(site.value.components as never)
-}
-if (Object.keys(site.value.theme).length) {
-  themeStore.loadFromConfig(site.value.theme)
+// Populate stores before ANY component rendering starts
+if (site.value) {
+  if (Object.keys(site.value.content).length) {
+    contentStore.loadFromConfig(site.value.content)
+  }
+  if (Array.isArray(site.value.components) && site.value.components.length) {
+    componentsStore.loadFromConfig(site.value.components as never)
+  }
+  if (Object.keys(site.value.theme).length) {
+    themeStore.loadFromConfig(site.value.theme)
+  }
 }
 
-// Apply the portfolio owner's default language for first-time visitors
-// (only if the visitor hasn't already set their own preference via the switcher)
+// Handle owner-defined default language
 if (import.meta.client) {
-  const storedLang = sessionStorage.getItem(`lang-pref-${username}`)
-  if (!storedLang) {
+  const langCookie = useCookie(`lang-pref-${username}`)
+  if (!langCookie.value) {
     const defaultLang = componentsStore.languageSettings.defaultLocale
-    await setLocale(defaultLang)
+    setLocale(defaultLang).then(() => {
+      langCookie.value = defaultLang
+    })
   }
 }
 
@@ -52,4 +55,5 @@ useSeoMeta({
   ogTitle: `${username} — Portfolio`,
   description: `Portfolio of ${username}, built on Studio.`
 })
+
 </script>

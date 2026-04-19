@@ -1,12 +1,13 @@
 // Admin-side site sync — queries Supabase directly from the authenticated client.
 // Avoids server-route cookie timing issues in the CSR admin panel.
-const isSaving     = ref(false)
-const isLoading    = ref(false)
-const saveError    = ref<string | null>(null)
-const siteUsername = ref<string | null>(null)
-
 export function useSiteSync() {
+  const isSaving     = useState('sync-is-saving', () => false)
+  const isLoading    = useState('sync-is-loading', () => false)
+  const saveError    = useState<string | null>('sync-save-error', () => null)
+  const siteUsername = useState<string | null>('sync-site-username', () => null)
+
   const supabase        = useSupabaseClient()
+
   const user            = useSupabaseUser()
   const contentStore    = useContentStore()
   const componentsStore = useComponentsStore()
