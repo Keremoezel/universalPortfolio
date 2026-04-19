@@ -42,7 +42,7 @@ export default defineNuxtConfig({
       { code: 'tr', name: 'Türkçe',  file: 'tr.json' },
       { code: 'de', name: 'Deutsch', file: 'de.json' }
     ],
-    langDir: 'i18n/locales',
+    langDir: '../i18n/locales',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',

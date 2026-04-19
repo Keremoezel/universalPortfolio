@@ -34,9 +34,9 @@ export function useSiteSync() {
         const components = data.components as unknown[]
         const theme      = data.theme      as Record<string, unknown>
 
-        if (content    && Object.keys(content).length)                    contentStore.loadFromConfig(content)
-        if (components && Array.isArray(components) && components.length) componentsStore.loadFromConfig(components as never)
-        if (theme      && Object.keys(theme).length)                      themeStore.loadFromConfig(theme)
+        if (content    && Object.keys(content).length) contentStore.loadFromConfig(content)
+        if (components)                                 componentsStore.loadFromConfig(components as any)
+        if (theme      && Object.keys(theme).length)  themeStore.loadFromConfig(theme)
       }
 
       return data

@@ -7,7 +7,7 @@ const route           = useRoute()
 const contentStore    = useContentStore()
 const componentsStore = useComponentsStore()
 const themeStore      = useThemeStore()
-const { setLocale }   = useI18n()
+
 
 const username = route.params.username as string
 
@@ -31,8 +31,8 @@ if (site.value) {
   if (Object.keys(site.value.content).length) {
     contentStore.loadFromConfig(site.value.content)
   }
-  if (Array.isArray(site.value.components) && site.value.components.length) {
-    componentsStore.loadFromConfig(site.value.components as never)
+  if (site.value.components) {
+    componentsStore.loadFromConfig(site.value.components as any)
   }
   if (Object.keys(site.value.theme).length) {
     themeStore.loadFromConfig(site.value.theme)
@@ -40,15 +40,24 @@ if (site.value) {
 }
 
 // Handle owner-defined default language
-if (import.meta.client) {
-  const langCookie = useCookie(`lang-pref-${username}`)
-  if (!langCookie.value) {
-    const defaultLang = componentsStore.languageSettings.defaultLocale
-    setLocale(defaultLang).then(() => {
-      langCookie.value = defaultLang
-    })
+const { locale, setLocale } = useI18n()
+const langCookie = useCookie('i18n_redirected') // Nuxt i18n's default cookie
+
+if (site.value) {
+  const ownerDefault = componentsStore.languageSettings.defaultLocale
+  
+  // If no user preference cookie exists, use the owner's default
+  if (!langCookie.value && locale.value !== ownerDefault) {
+    if (import.meta.server) {
+      // On server, we can just set the locale value for this request
+      locale.value = ownerDefault
+    } else {
+      // On client, use the official switcher
+      setLocale(ownerDefault)
+    }
   }
 }
+
 
 useSeoMeta({
   title: `${username} — Portfolio`,
