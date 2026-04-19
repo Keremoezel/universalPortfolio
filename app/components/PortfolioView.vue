@@ -515,8 +515,8 @@ function onCardReset(e: MouseEvent) {
   pointer-events: none;
   background: radial-gradient(
     ellipse 80% 70% at 50% 45%,
-    rgba(5, 3, 1, 0.12) 0%,
-    rgba(5, 3, 1, 0.38) 100%
+    color-mix(in srgb, var(--dusk-bg) 12%, transparent) 0%,
+    color-mix(in srgb, var(--dusk-bg) 38%, transparent) 100%
   );
   opacity: var(--overlay-fade, 0);
   will-change: opacity;
@@ -593,18 +593,18 @@ function onCardReset(e: MouseEvent) {
 
 @keyframes pulse {
   0%, 100% { opacity: 1; box-shadow: 0 0 0 0 color-mix(in srgb, var(--dusk-primary) 40%, transparent); }
-  50% { opacity: 0.5; box-shadow: 0 0 0 4px rgba(212,148,74,0); }
+  50% { opacity: 0.5; box-shadow: 0 0 0 4px color-mix(in srgb, var(--dusk-primary) 0%, transparent); }
 }
 
 .hero-name {
   font-family: var(--font-display);
   font-size: clamp(3.5rem, 9vw, 8rem);
-  font-weight: 300;
+  font-weight: var(--heading-weight);
   letter-spacing: -0.03em;
   color: var(--dusk-text);
   line-height: 0.95;
   margin-bottom: var(--space-8);
-  text-shadow: 0 2px 30px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 30px color-mix(in srgb, black 50%, transparent);
 }
 
 .hero-tagline-wrap {
@@ -777,11 +777,11 @@ function onCardReset(e: MouseEvent) {
 .section-title {
   font-family: var(--font-display);
   font-size: clamp(3rem, 5vw, 5rem);
-  font-weight: 300;
+  font-weight: var(--heading-weight);
   letter-spacing: -0.04em;
   color: var(--dusk-text);
   line-height: 0.95;
-  text-shadow: 0 2px 30px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 30px color-mix(in srgb, black 60%, transparent);
 }
 
 /* ══════════════════════════════════════════════
@@ -941,7 +941,7 @@ function onCardReset(e: MouseEvent) {
 .watermark-index {
   font-family: 'Courier New', monospace;
   font-size: 2.5rem;
-  color: rgba(242, 237, 227, 0.06);
+  color: color-mix(in srgb, var(--dusk-text) 6%, transparent);
   letter-spacing: 0.3em;
   line-height: 1;
 }
@@ -1034,7 +1034,7 @@ function onCardReset(e: MouseEvent) {
   align-items: center;
   gap: var(--space-3);
   padding: var(--space-3) var(--space-6);
-  background: linear-gradient(to top, rgba(18,14,8,0.95) 0%, transparent 100%);
+  background: linear-gradient(to top, color-mix(in srgb, var(--dusk-bg) 95%, transparent) 0%, transparent 100%);
   opacity: 0;
   transform: translateY(4px);
   transition:
@@ -1106,13 +1106,13 @@ function onCardReset(e: MouseEvent) {
 .about-headline {
   font-family: var(--font-display);
   font-size: clamp(3rem, 5vw, 5.5rem);
-  font-weight: 300;
+  font-weight: var(--heading-weight);
   letter-spacing: -0.04em;
   color: var(--dusk-text);
   line-height: 0.95;
   margin-top: var(--space-4);
   margin-bottom: var(--space-8);
-  text-shadow: 0 2px 30px rgba(0,0,0,0.5);
+  text-shadow: 0 2px 30px color-mix(in srgb, black 50%, transparent);
 }
 
 .about-rule {
@@ -1235,8 +1235,7 @@ function onCardReset(e: MouseEvent) {
   font-family: 'Courier New', monospace;
   font-size: 10px;
   letter-spacing: 0.2em;
-  color: var(--dusk-primary);
-  opacity: 0.7;
+  color: var(--dusk-primary-dim);
 }
 
 .process-step-title {

@@ -4,6 +4,49 @@
       <!-- Controls column -->
       <div class="editor-controls">
 
+        <!-- Layout Styles (Moods) -->
+        <div class="control-group">
+          <h3 class="group-title">Layout Moods (BG/Surface)</h3>
+          <div class="preset-grid">
+            <button
+              v-for="(colors, name) in LAYOUT_PRESETS"
+              :key="name"
+              class="preset-btn"
+              :class="{ active: currentLayout === name }"
+              :title="name.replace('_', ' ')"
+              @click="applyLayout(name, colors)"
+            >
+              <div class="preset-swatch mood-swatch">
+                <div class="swatch-bg" :style="{ background: colors.bg }" />
+                <div class="swatch-surface" :style="{ background: colors.surface }" />
+                <div class="swatch-border" :style="{ background: colors.border }" />
+              </div>
+              <span class="preset-name">{{ name.replace('_', ' ') }}</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Theme Presets (Primary/Accent) -->
+        <div class="control-group">
+          <h3 class="group-title">Brand Accents</h3>
+          <div class="preset-grid">
+            <button
+              v-for="(colors, name) in THEME_PRESETS"
+              :key="name"
+              class="preset-btn"
+              :class="{ active: currentPreset === name }"
+              :title="name.replace('_', ' ')"
+              @click="applyPreset(name, colors)"
+            >
+              <div class="preset-swatch">
+                <div class="swatch-primary" :style="{ background: colors.primary }" />
+                <div class="swatch-accent" :style="{ background: colors.accent }" />
+              </div>
+              <span class="preset-name">{{ name.split('_')[0] }}</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Colors -->
         <div class="control-group">
           <h3 class="group-title">Colors</h3>
@@ -124,7 +167,7 @@
             >
               Your Portfolio
             </div>
-            <div class="preview-sub" :style="{ color: localColors.muted }">
+            <div class="preview-sub" :style="{ color: 'var(--dusk-text-muted)' }">
               Crafting experiences that endure.
             </div>
 
@@ -143,7 +186,7 @@
             <div class="preview-card-title" :style="{ fontFamily: localTypo.fontDisplay, color: localColors.text }">
               Horizon Interface
             </div>
-            <div class="preview-card-desc" :style="{ color: localColors.muted }">
+            <div class="preview-card-desc" :style="{ color: 'var(--dusk-text-muted)' }">
               A comprehensive design system built for scale.
             </div>
           </div>
@@ -160,15 +203,71 @@ import { DUSK_DEFAULTS } from '~/stores/theme'
 
 const themeStore = useThemeStore()
 
+const LAYOUT_PRESETS = {
+  Dusk_Original: { bg: "#120e08", surface: "#1e1610", border: "#3a2d1c", text: "#f2ede3" },
+  Midnight:      { bg: "#0a0a0c", surface: "#141418", border: "#282830", text: "#e0e0e6" },
+  Deep_Slate:    { bg: "#0f1115", surface: "#1a1d23", border: "#303640", text: "#eceef2" },
+  Soft_Onyx:     { bg: "#050505", surface: "#121212", border: "#222222", text: "#f5f5f5" },
+  Light_Studio:  { bg: "#f8f9fa", surface: "#ffffff", border: "#e9ecef", text: "#1a1a1b" },
+  Nordic_Frost:  { bg: "#111418", surface: "#181c22", border: "#262c36", text: "#d1d9e0" },
+  Kyoto_Ink:     { bg: "#0d0b14", surface: "#15121f", border: "#2a243d", text: "#e4e0f0" },
+  Matcha_Moss:   { bg: "#0d0e0c", surface: "#141712", border: "#242b1f", text: "#e2e6df" },
+  Ruby_Eclipse:  { bg: "#120a0a", surface: "#1c1111", border: "#361d1d", text: "#f0e4e4" },
+  Concrete:      { bg: "#1a1a1c", surface: "#242427", border: "#3a3a40", text: "#eaeaec" }
+}
+
+const THEME_PRESETS = {
+  amber_energy:    { primary: "#d4944a", accent: "#c4613a" },
+  indigo_tech:     { primary: "#60a5fa", accent: "#4f46e5" },
+  emerald_trust:   { primary: "#10b981", accent: "#059669" },
+  rose_creative:   { primary: "#fb7185", accent: "#e11d48" },
+  amethyst_luxury: { primary: "#a78bfa", accent: "#7c3aed" },
+  teal_modern:     { primary: "#2dd4bf", accent: "#0d9488" },
+  crimson_bold:    { primary: "#f87171", accent: "#b91c1c" },
+  slate_minimal:   { primary: "#94a3b8", accent: "#475569" },
+  cyan_cyber:      { primary: "#22d3ee", accent: "#0284c7" },
+  gold_prestige:   { primary: "#fbbf24", accent: "#b45309" }
+}
+
 const localColors = reactive({ ...themeStore.activeTheme.colors })
 const localTypo = reactive({ ...themeStore.activeTheme.typography })
 const localRadius = ref(parseInt(themeStore.activeTheme.radius) || 4)
+const currentPreset = ref<string | null>(null)
+const currentLayout = ref<string | null>('Dusk_Original')
 
 const exportedJson = ref('')
 const copied = ref(false)
 
+function applyLayout(name: string, colors: typeof LAYOUT_PRESETS.Dusk_Original) {
+  currentLayout.value = name
+  localColors.bg = colors.bg
+  localColors.surface = colors.surface
+  localColors.border = colors.border
+  localColors.text = colors.text
+  applyLive()
+}
+
+function applyPreset(name: string, colors: { primary: string, accent: string }) {
+  currentPreset.value = name
+  localColors.primary = colors.primary
+  localColors.accent = colors.accent
+  applyLive()
+}
+
 function applyLive() {
-  // Live preview update without persisting to store
+  if (import.meta.client) {
+    const root = document.documentElement
+    root.style.setProperty('--dusk-bg', localColors.bg)
+    root.style.setProperty('--dusk-surface', localColors.surface)
+    root.style.setProperty('--dusk-border', localColors.border)
+    root.style.setProperty('--dusk-primary', localColors.primary)
+    root.style.setProperty('--dusk-accent', localColors.accent)
+    root.style.setProperty('--dusk-text', localColors.text)
+    root.style.setProperty('--font-display', localTypo.fontDisplay)
+    root.style.setProperty('--font-body', localTypo.fontBody)
+    root.style.setProperty('--heading-weight', localTypo.headingWeight)
+    root.style.setProperty('--radius-md', `${localRadius.value}px`)
+  }
 }
 
 function applyTheme() {
@@ -231,6 +330,78 @@ async function copyJson() {
   margin-bottom: var(--space-4);
   padding-bottom: var(--space-3);
   border-bottom: 1px solid var(--dusk-border-muted);
+}
+
+/* Presets */
+.preset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(64px, 1fr));
+  gap: var(--space-2);
+}
+
+.preset-btn {
+  background: var(--dusk-bg);
+  border: 1px solid var(--dusk-border-muted);
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.preset-btn:hover {
+  border-color: var(--dusk-primary);
+  background: var(--dusk-surface-alt);
+}
+
+.preset-btn.active {
+  border-color: var(--dusk-primary);
+  background: var(--dusk-primary-glow);
+}
+
+.preset-swatch {
+  display: flex;
+  width: 100%;
+  height: 24px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.mood-swatch {
+  flex-direction: column;
+}
+
+.swatch-bg { flex: 1; width: 100%; }
+.swatch-surface { 
+  flex: 0.7; 
+  width: 75%; 
+  margin-inline: auto; 
+  height: 14px; 
+  margin-top: -8px; 
+  border: 1px solid var(--dusk-border); 
+  border-bottom: none; 
+  border-radius: 2px 2px 0 0; 
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+}
+.swatch-border { height: 2px; width: 100%; background: var(--dusk-border); opacity: 0.5; }
+
+.swatch-primary { flex: 1; }
+.swatch-accent { flex: 0.4; }
+
+.preset-name {
+  font-size: 8px;
+  text-transform: uppercase;
+  color: var(--dusk-text-muted);
+  letter-spacing: 0.1em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+  text-align: center;
 }
 
 .color-fields {

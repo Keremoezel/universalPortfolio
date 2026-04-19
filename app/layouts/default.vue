@@ -105,12 +105,12 @@ function scrollTo(id: string) {
 }
 
 .nav-scrolled {
-  background-color: rgba(12, 9, 5, 0.86);
+  background-color: color-mix(in srgb, var(--dusk-bg) 86%, transparent);
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
   border-bottom: 1px solid color-mix(in srgb, var(--dusk-primary) 12%, transparent);
   box-shadow: 0 1px 0 color-mix(in srgb, var(--dusk-primary) 6%, transparent),
-              0 8px 32px rgba(0, 0, 0, 0.4);
+              0 8px 32px color-mix(in srgb, black 40%, transparent);
 }
 
 .nav-inner {

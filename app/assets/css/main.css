@@ -12,32 +12,50 @@
 
 /* ── 2. DUSK DESIGN TOKENS (:root) ── */
 :root {
-  /* Colors */
+  /* =========================================
+     PRIMITIVE TOKENS
+     (Raw hex values - single source of truth)
+     ========================================= */
   --dusk-bg:             #120e08;
-  --dusk-bg-deep:        color-mix(in srgb, var(--dusk-bg) 60%, black);
-  
   --dusk-surface:        #1e1610;
-  --dusk-surface-alt:    color-mix(in srgb, var(--dusk-surface) 85%, white);
-  
   --dusk-border:         #3a2d1c;
+  --dusk-primary:        #d4944a;
+  --dusk-accent:         #c4613a;
+  --dusk-text:           #f2ede3;
+
+  /* Typography primitives */
+  --font-display: 'Cormorant Garamond', 'Georgia', serif;
+  --font-body:    'DM Sans', 'Helvetica Neue', sans-serif;
+  --heading-weight: 300;
+
+  /* =========================================
+     DERIVED TOKENS (Dynamically Computed)
+     ========================================= */
+  --dusk-bg-deep:        color-mix(in srgb, var(--dusk-bg) 60%, black);
+  --dusk-surface-alt:    color-mix(in srgb, var(--dusk-surface) 85%, white);
   --dusk-border-muted:   color-mix(in srgb, var(--dusk-border) 70%, black);
 
-  --dusk-primary:        #d4944a;
   --dusk-primary-dark:   color-mix(in srgb, var(--dusk-primary) 85%, black);
   --dusk-primary-glow:   color-mix(in srgb, var(--dusk-primary) 15%, transparent);
+  --dusk-primary-dim:    color-mix(in srgb, var(--dusk-primary) 70%, transparent);
 
-  --dusk-accent:         #c4613a;
   --dusk-accent-dark:    color-mix(in srgb, var(--dusk-accent) 85%, black);
   --dusk-accent-glow:    color-mix(in srgb, var(--dusk-accent) 15%, transparent);
 
-  --dusk-text:           #f2ede3;
   --dusk-text-secondary: color-mix(in srgb, var(--dusk-text) 83%, transparent);
   --dusk-text-muted:     color-mix(in srgb, var(--dusk-text) 57%, transparent);
-  --dusk-text-faint:     color-mix(in srgb, var(--dusk-text) 35%, transparent);
+  --dusk-text-faint:     #7f7261; /* Adjusted for WCAG AA on #120e08 */
 
-  /* Typography */
-  --font-display: 'Cormorant Garamond', 'Georgia', serif;
-  --font-body:    'DM Sans', 'Helvetica Neue', sans-serif;
+  /* =========================================
+     SEMANTIC ALIAS TIER
+     ========================================= */
+  --color-bg-base:      var(--dusk-bg);
+  --color-bg-raised:    var(--dusk-surface);
+  --color-bg-elevated:  var(--dusk-surface-alt);
+  --color-border:       var(--dusk-border);
+  --color-text-primary: var(--dusk-text);
+  --color-text-secondary: var(--dusk-text-secondary);
+  --color-brand:        var(--dusk-primary);
 
   /* Type scale */
   --text-xs:   0.75rem;

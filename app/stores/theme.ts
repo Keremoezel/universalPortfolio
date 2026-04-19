@@ -8,7 +8,6 @@ export interface ThemeColors {
   primary: string
   accent: string
   text: string
-  muted: string
 }
 
 export interface ThemeTypography {
@@ -32,8 +31,7 @@ export const DUSK_DEFAULTS: ThemeConfig = {
     border:  '#3a2d1c',
     primary: '#d4944a',
     accent:  '#c4613a',
-    text:    '#f2ede3',
-    muted:   '#8a7d6b'
+    text:    '#f2ede3'
   },
   typography: {
     fontDisplay: "'Cormorant Garamond', Georgia, serif",
@@ -80,9 +78,10 @@ export const useThemeStore = defineStore('theme', () => {
       root.style.setProperty('--dusk-primary', c.primary)
       root.style.setProperty('--dusk-accent', c.accent)
       root.style.setProperty('--dusk-text', c.text)
-      root.style.setProperty('--dusk-text-muted', c.muted)
+      
       root.style.setProperty('--font-display', t.fontDisplay)
       root.style.setProperty('--font-body', t.fontBody)
+      root.style.setProperty('--heading-weight', t.headingWeight)
       root.style.setProperty('--radius-md', activeTheme.value.radius)
     }
   }
