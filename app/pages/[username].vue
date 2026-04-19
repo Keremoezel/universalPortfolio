@@ -7,6 +7,7 @@ const route           = useRoute()
 const contentStore    = useContentStore()
 const componentsStore = useComponentsStore()
 const themeStore      = useThemeStore()
+const { setLocale }   = useI18n()
 
 const username = route.params.username as string
 
@@ -34,6 +35,16 @@ if (Array.isArray(site.value.components) && site.value.components.length) {
 }
 if (Object.keys(site.value.theme).length) {
   themeStore.loadFromConfig(site.value.theme)
+}
+
+// Apply the portfolio owner's default language for first-time visitors
+// (only if the visitor hasn't already set their own preference via the switcher)
+if (import.meta.client) {
+  const storedLang = sessionStorage.getItem(`lang-pref-${username}`)
+  if (!storedLang) {
+    const defaultLang = componentsStore.languageSettings.defaultLocale
+    await setLocale(defaultLang)
+  }
 }
 
 useSeoMeta({

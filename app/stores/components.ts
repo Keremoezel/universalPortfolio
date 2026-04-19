@@ -2,6 +2,12 @@
 // Controls section visibility and ordering in the portfolio
 
 export type SectionKey = 'hero' | 'work' | 'about' | 'contact'
+export type LangCode = 'en' | 'tr' | 'de'
+
+export interface LanguageSettings {
+  defaultLocale: LangCode
+  enabledLocales: LangCode[]
+}
 
 export interface SectionConfig {
   key: SectionKey
@@ -17,6 +23,11 @@ export const useComponentsStore = defineStore('components', () => {
     { key: 'about',   label: 'About',   visible: true, order: 2 },
     { key: 'contact', label: 'Contact', visible: true, order: 3 }
   ])
+
+  const languageSettings = ref<LanguageSettings>({
+    defaultLocale: 'en',
+    enabledLocales: ['en', 'tr', 'de']
+  })
 
   const sortedSections = computed(() =>
     [...sections.value].sort((a, b) => a.order - b.order)
@@ -52,27 +63,62 @@ export const useComponentsStore = defineStore('components', () => {
       section.visible = true
       section.order = idx
     })
+    languageSettings.value = { defaultLocale: 'en', enabledLocales: ['en', 'tr', 'de'] }
+  }
+
+  function setDefaultLocale(code: LangCode) {
+    languageSettings.value.defaultLocale = code
+    // always ensure default locale is enabled
+    if (!languageSettings.value.enabledLocales.includes(code)) {
+      languageSettings.value.enabledLocales.push(code)
+    }
+  }
+
+  function toggleLocale(code: LangCode) {
+    // Cannot disable the default locale
+    if (code === languageSettings.value.defaultLocale) return
+    const idx = languageSettings.value.enabledLocales.indexOf(code)
+    if (idx === -1) {
+      languageSettings.value.enabledLocales.push(code)
+    } else {
+      languageSettings.value.enabledLocales.splice(idx, 1)
+    }
   }
 
   // ── DB integration ──
 
-  function loadFromConfig(config: SectionConfig[]) {
-    if (!Array.isArray(config) || config.length === 0) return
-    sections.value = config
+  function loadFromConfig(config: any) {
+    if (Array.isArray(config)) {
+      // legacy: just an array of sections
+      if (config.length) sections.value = config
+    } else if (config && typeof config === 'object') {
+      if (Array.isArray(config.sections) && config.sections.length) {
+        sections.value = config.sections
+      }
+      if (config.languageSettings) {
+        languageSettings.value = config.languageSettings
+      }
+    }
   }
 
-  function getConfig(): SectionConfig[] {
-    return sections.value
+  function getConfig() {
+    return {
+      sections: sections.value,
+      languageSettings: languageSettings.value
+    }
   }
 
   return {
     sections,
+    languageSettings,
     sortedSections,
     visibleSections,
     toggleSection,
     setSectionVisible,
     reorderSections,
     resetToDefaults,
+    setDefaultLocale,
+    toggleLocale,
     loadFromConfig,
     getConfig
   }

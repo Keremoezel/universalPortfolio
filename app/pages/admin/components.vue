@@ -74,6 +74,50 @@
         </span>
       </div>
     </div>
+
+    <!-- Language Settings -->
+    <div class="lang-settings-card">
+      <div class="lang-header">
+        <span class="lang-title">Language Settings</span>
+        <span class="lang-desc">Control which languages visitors can switch between, and which language they see first.</span>
+      </div>
+
+      <div class="lang-default-row">
+        <label class="lang-label">Default Language (shown to new visitors)</label>
+        <div class="lang-select-row">
+          <button
+            v-for="lang in allLangs"
+            :key="lang.code"
+            class="lang-choice-btn"
+            :class="{ active: componentsStore.languageSettings.defaultLocale === lang.code }"
+            @click="componentsStore.setDefaultLocale(lang.code)"
+          >
+            {{ lang.label }}
+          </button>
+        </div>
+      </div>
+
+      <div class="lang-toggle-list">
+        <div v-for="lang in allLangs" :key="lang.code" class="lang-toggle-row">
+          <div class="lang-toggle-info">
+            <span class="lang-toggle-name">{{ lang.label }}</span>
+            <span v-if="lang.code === componentsStore.languageSettings.defaultLocale" class="lang-default-badge">Default</span>
+          </div>
+          <button
+            class="toggle-btn"
+            :class="{ active: componentsStore.languageSettings.enabledLocales.includes(lang.code) }"
+            :disabled="lang.code === componentsStore.languageSettings.defaultLocale"
+            :title="lang.code === componentsStore.languageSettings.defaultLocale ? 'Cannot disable default language' : ''"
+            @click="componentsStore.toggleLocale(lang.code)"
+          >
+            <span class="toggle-track"><span class="toggle-thumb" /></span>
+            <span class="toggle-label">
+              {{ componentsStore.languageSettings.enabledLocales.includes(lang.code) ? 'Enabled' : 'Disabled' }}
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -81,6 +125,12 @@
 definePageMeta({ layout: 'admin' })
 
 const componentsStore = useComponentsStore()
+
+const allLangs = [
+  { code: 'en' as const, label: 'EN — English' },
+  { code: 'tr' as const, label: 'TR — Türkçe' },
+  { code: 'de' as const, label: 'DE — Deutsch' },
+]
 </script>
 
 <style scoped>
@@ -293,4 +343,106 @@ const componentsStore = useComponentsStore()
   color: var(--dusk-text-faint);
   font-style: italic;
 }
+
+/* Language Settings */
+.lang-settings-card {
+  background: var(--dusk-surface);
+  border: 1px solid var(--dusk-border-muted);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.lang-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--dusk-border-muted);
+}
+
+.lang-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 400;
+  color: var(--dusk-text);
+}
+
+.lang-desc {
+  font-size: var(--text-xs);
+  color: var(--dusk-text-muted);
+}
+
+.lang-default-row { display: flex; flex-direction: column; gap: var(--space-3); }
+
+.lang-label {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--dusk-text-faint);
+}
+
+.lang-select-row {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.lang-choice-btn {
+  padding: var(--space-2) var(--space-5);
+  background: transparent;
+  border: 1px solid var(--dusk-border-muted);
+  border-radius: var(--radius-sm);
+  color: var(--dusk-text-muted);
+  font-family: var(--font-body);
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-smooth);
+}
+
+.lang-choice-btn.active {
+  background: var(--dusk-primary);
+  border-color: var(--dusk-primary);
+  color: var(--dusk-bg);
+}
+
+.lang-toggle-list { display: flex; flex-direction: column; gap: var(--space-2); }
+
+.lang-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--dusk-bg);
+  border: 1px solid var(--dusk-border-muted);
+  border-radius: var(--radius-md);
+}
+
+.lang-toggle-info { display: flex; align-items: center; gap: var(--space-3); }
+
+.lang-toggle-name {
+  font-family: var(--font-body);
+  font-size: var(--text-sm);
+  color: var(--dusk-text);
+}
+
+.lang-default-badge {
+  font-size: 9px;
+  letter-spacing: var(--tracking-widest);
+  text-transform: uppercase;
+  color: var(--dusk-primary);
+  background: color-mix(in srgb, var(--dusk-primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--dusk-primary) 25%, transparent);
+  border-radius: var(--radius-full);
+  padding: 2px 8px;
+}
+
+.toggle-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 </style>

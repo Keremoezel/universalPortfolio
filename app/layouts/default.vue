@@ -12,10 +12,10 @@
           <a href="#about"   class="nav-link" @click.prevent="scrollTo('about')">{{ $t('nav.about') }}</a>
           <a href="#contact" class="nav-link" @click.prevent="scrollTo('contact')">{{ $t('nav.contact') }}</a>
 
-          <!-- Language switcher: EN · TR · DE -->
+          <!-- Language switcher: only show enabled locales -->
           <div class="lang-switcher" role="navigation" aria-label="Language">
             <NuxtLink
-              v-for="loc in locales"
+              v-for="loc in visibleLocales"
               :key="loc.code"
               :to="switchLocalePath(loc.code)"
               class="lang-btn"
@@ -58,12 +58,20 @@
 
 <script setup lang="ts">
 const content = useContentStore()
+const componentsStore = useComponentsStore()
 const { field } = useLocaleContent()
 
 // i18n routing
 const { locale, locales } = useI18n()
 const switchLocalePath = useSwitchLocalePath()
 const localePath = useLocalePath()
+
+// Only show locales enabled by the portfolio owner
+const visibleLocales = computed(() =>
+  locales.value.filter(loc =>
+    componentsStore.languageSettings.enabledLocales.includes(loc.code as any)
+  )
+)
 
 // Navbar glass + scroll velocity
 const { isScrolled } = useScrollBehavior()
